@@ -1,0 +1,35 @@
+h1.top {
+	font-family: 'Lato', sans-serif;
+	font-size : 120px;
+}
+
+h2.top {
+	font-family: 'Lato', sans-serif;
+	font-size : 64px;
+	color : #fff;
+	margin-top : -10px;
+}
+
+#content {
+	margin-top : 80px;
+	margin-right : auto;
+	margin-left : auto;
+	width : 960px;
+}
+
+#list,#submit,#showArea {
+	margin-top : 100px;
+}
+
+li {
+	list-style-type : none;
+	display : inline;
+}
+
+ul.result {
+}
+
+img.goods {
+	width : 330px;
+	height : 220px;
+}
