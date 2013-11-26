@@ -18,264 +18,54 @@ $result['title']=$xml->xpath("//title");
 $pre_result['url']=$xml->xpath("//auctionitemurl");
 $result['url']=urlencode($pre_result['url'][0]);
 
+//もしオークションIDが既にデータベースにあったら内容を取得する
+$link=mysql_connect("localhost","root","");
+if(!$link){
+	die("接続エラー!".mysql_error());
+}
+mysql_select_db("storyauc",$link);
+$sql="SELECT message FROM list WHERE auctionid='".$auctionID."'";
+$posts=mysql_query($sql,$link);
+//デフォルトモードはnew
+$mode="new";
+while($post=mysql_fetch_array($posts)){
+	if(!$post['message']){
+		//メッセージが入っていなければ新規投稿モード
+		$mode="new";
+	/*
+	}elseif($_SESSION['message']){
+		//修正ボタンで戻ってきた場合
+		$mode="edit";	
+		$message=$_SESSION['message'];
+		var_dump($message);
+	*/
+
+	}else{
+		//編集モード
+		$mode="edit";
+		$pre_message = $post['message'];
+		//<br>を改行に変換
+		$message=str_replace("<br/>","\r\n", $pre_message);
+	}
+}
+
+mysql_close($link);
 ?>
 
 <!DOCTYPE html>
-<html lang="en">
+<html lang="ja">
   <head>
     <meta charset="utf-8">
-    <title>Carousel Template &middot; Bootstrap</title>
+    <title>STORY TO AUCTION: 出品者の想いを綴ったオークション</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="">
-    <meta name="author" content="">
+    <meta name="description" content="STORY TO AUCTIONは、オークション出品者の出品までの想いが詠めるWebサービスです。どんな想いで購入したのか、どれだけ大切に扱われていたのか、そしてどうして手放すことになってしまったのか…。どうせ買うなら、想いを共感できた人から買いませんか？">
+    <meta name="author" content="buono">
 
     <!-- Le styles -->
     <link href="css/bootstrap.css" rel="stylesheet">
     <link href="css/bootstrap-responsive.css" rel="stylesheet">
     <link href="css/storyauc.css" rel="stylesheet">
-    <style>
-
-    /* GLOBAL STYLES
-    -------------------------------------------------- */
-    /* Padding below the footer and lighter body text */
-
-    body {
-      padding-bottom: 40px;
-      color: #5a5a5a;
-    }
-
-
-
-    /* CUSTOMIZE THE NAVBAR
-    -------------------------------------------------- */
-
-    /* Special class on .container surrounding .navbar, used for positioning it into place. */
-    .navbar-wrapper {
-      position: absolute;
-      top: 0;
-      left: 0;
-      right: 0;
-      z-index: 10;
-      margin-top: 20px;
-      margin-bottom: -90px; /* Negative margin to pull up carousel. 90px is roughly margins and height of navbar. */
-    }
-    .navbar-wrapper .navbar {
-
-    }
-
-    /* Remove border and change up box shadow for more contrast */
-    .navbar .navbar-inner {
-      border: 0;
-      -webkit-box-shadow: 0 2px 10px rgba(0,0,0,.25);
-         -moz-box-shadow: 0 2px 10px rgba(0,0,0,.25);
-              box-shadow: 0 2px 10px rgba(0,0,0,.25);
-    }
-
-    /* Downsize the brand/project name a bit */
-    .navbar .brand {
-      padding: 14px 20px 16px; /* Increase vertical padding to match navbar links */
-      font-size: 16px;
-      font-weight: bold;
-      text-shadow: 0 -1px 0 rgba(0,0,0,.5);
-    }
-
-    /* Navbar links: increase padding for taller navbar */
-    .navbar .nav > li > a {
-      padding: 15px 20px;
-    }
-
-    /* Offset the responsive button for proper vertical alignment */
-    .navbar .btn-navbar {
-      margin-top: 10px;
-    }
-
-
-
-    /* CUSTOMIZE THE CAROUSEL
-    -------------------------------------------------- */
-
-    /* Carousel base class */
-    .carousel {
-      margin-bottom: 60px;
-    }
-
-    .carousel .container {
-      position: relative;
-      z-index: 9;
-    }
-
-    .carousel-control {
-      height: 80px;
-      margin-top: 0;
-      font-size: 120px;
-      text-shadow: 0 1px 1px rgba(0,0,0,.4);
-      background-color: transparent;
-      border: 0;
-      z-index: 10;
-    }
-
-    .carousel .item {
-      height: 500px;
-    }
-    .carousel img {
-      position: absolute;
-      top: 0;
-      left: 0;
-      min-width: 100%;
-      height: 500px;
-    }
-
-    .carousel-caption {
-      background-color: transparent;
-      position: static;
-      max-width: 550px;
-      padding: 0 20px;
-      margin-top: 200px;
-    }
-    .carousel-caption h1,
-    .carousel-caption .lead {
-      margin: 0;
-      line-height: 1.25;
-      color: #fff;
-      text-shadow: 0 1px 1px rgba(0,0,0,.4);
-    }
-    .carousel-caption .btn {
-      margin-top: 10px;
-    }
-
-
-
-    /* MARKETING CONTENT
-    -------------------------------------------------- */
-
-    /* Center align the text within the three columns below the carousel */
-    .marketing .span4 {
-      text-align: center;
-    }
-    .marketing h2 {
-      font-weight: normal;
-    }
-    .marketing .span4 p {
-      margin-left: 10px;
-      margin-right: 10px;
-    }
-
-
-    /* Featurettes
-    ------------------------- */
-
-    .featurette-divider {
-      margin: 80px 0; /* Space out the Bootstrap <hr> more */
-    }
-    .featurette {
-      padding-top: 120px; /* Vertically center images part 1: add padding above and below text. */
-      overflow: hidden; /* Vertically center images part 2: clear their floats. */
-    }
-    .featurette-image {
-      margin-top: -120px; /* Vertically center images part 3: negative margin up the image the same amount of the padding to center it. */
-    }
-
-    /* Give some space on the sides of the floated elements so text doesn't run right into it. */
-    .featurette-image.pull-left {
-      margin-right: 40px;
-    }
-    .featurette-image.pull-right {
-      margin-left: 40px;
-    }
-
-    /* Thin out the marketing headings */
-    .featurette-heading {
-      font-size: 50px;
-      font-weight: 300;
-      line-height: 1;
-      letter-spacing: -1px;
-    }
-
-
-
-    /* RESPONSIVE CSS
-    -------------------------------------------------- */
-
-    @media (max-width: 979px) {
-
-      .container.navbar-wrapper {
-        margin-bottom: 0;
-        width: auto;
-      }
-      .navbar-inner {
-        border-radius: 0;
-        margin: -20px 0;
-      }
-
-      .carousel .item {
-        height: 500px;
-      }
-      .carousel img {
-        width: auto;
-        height: 500px;
-      }
-
-      .featurette {
-        height: auto;
-        padding: 0;
-      }
-      .featurette-image.pull-left,
-      .featurette-image.pull-right {
-        display: block;
-        float: none;
-        max-width: 40%;
-        margin: 0 auto 20px;
-      }
-    }
-
-
-    @media (max-width: 767px) {
-
-      .navbar-inner {
-        margin: -20px;
-      }
-
-      .carousel {
-        margin-left: -20px;
-        margin-right: -20px;
-      }
-      .carousel .container {
-
-      }
-      .carousel .item {
-        height: 300px;
-      }
-      .carousel img {
-        height: 300px;
-      }
-      .carousel-caption {
-        width: 65%;
-        padding: 0 70px;
-        margin-top: 100px;
-      }
-      .carousel-caption h1 {
-        font-size: 30px;
-      }
-      .carousel-caption .lead,
-      .carousel-caption .btn {
-        font-size: 18px;
-      }
-
-      .marketing .span4 + .span4 {
-        margin-top: 40px;
-      }
-
-      .featurette-heading {
-        font-size: 30px;
-      }
-      .featurette .lead {
-        font-size: 18px;
-        line-height: 1.5;
-      }
-
-    }
-    </style>
-
+	<link href='http://fonts.googleapis.com/css?family=Poiret+One' rel='stylesheet' type='text/css'>
     <!-- HTML5 shim, for IE6-8 support of HTML5 elements -->
     <!--[if lt IE 9]>
       <script src="js/html5shiv.js"></script>
@@ -295,85 +85,57 @@ $result['url']=urlencode($pre_result['url'][0]);
 
     <!-- NAVBAR
     ================================================== -->
-    <div class="navbar-wrapper">
-      <!-- Wrap the .navbar in .container to center it within the absolutely positioned parent. -->
-      <div class="container">
 
-        <div class="navbar navbar-inverse">
-          <div class="navbar-inner">
-            <!-- Responsive Navbar Part 1: Button for triggering responsive navbar (not covered in tutorial). Include responsive CSS to utilize. -->
-            <button type="button" class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse">
-              <span class="icon-bar"></span>
-              <span class="icon-bar"></span>
-              <span class="icon-bar"></span>
-            </button>
-            <a class="brand" href="index.php">Story to Auction</a>
-            <!-- Responsive Navbar Part 2: Place all navbar contents you want collapsed withing .navbar-collapse.collapse. -->
-            <div class="nav-collapse collapse">
-              <ul class="nav">
-                <li class="active"><a href="index.php">Home</a></li>
-                <li><a href="#about">About</a></li>
-                <li><a href="#contact">Contact</a></li>
-                <!-- Read about Bootstrap dropdowns at http://twitter.github.com/bootstrap/javascript.html#dropdowns -->
-                <li class="dropdown">
-                  <a href="#" class="dropdown-toggle" data-toggle="dropdown">Dropdown <b class="caret"></b></a>
-                  <ul class="dropdown-menu">
-                    <li><a href="#">Action</a></li>
-                    <li><a href="#">Another action</a></li>
-                    <li><a href="#">Something else here</a></li>
-                    <li class="divider"></li>
-                    <li class="nav-header">Nav header</li>
-                    <li><a href="#">Separated link</a></li>
-                    <li><a href="#">One more separated link</a></li>
-                  </ul>
-                </li>
-              </ul>
-            </div><!--/.nav-collapse -->
-          </div><!-- /.navbar-inner -->
-        </div><!-- /.navbar -->
-
-      </div> <!-- /.container -->
-    </div><!-- /.navbar-wrapper -->
-<!--
-    <div id="myCarousel" class="carousel slide">
-      <div class="carousel-inner">
-        <div class="item active">
-          <div class="container">
-            <div class="carousel-caption">
-				<h2><?php echo $result['title'][0];?></h2>
-              <p class="lead"></p>
-            </div>
-          </div>
-        </div>
+    <div class="navbar navbar-inverse navbar-static-top">
+      <div class="navbar-inner">
+	  <div class="container">
+        <a class="brand active" href="index.php">STORY TO AUCTION</a>
 	  </div>
-	</div>
--->
-<div class="container">
-<div id="submit">
-<h2><?php echo $result['title'][0];?></h2>
-<a href='http://atq.ck.valuecommerce.com/servlet/atq/referral?sid=2219441&pid=877775177&vcptn=<?php echo $affiliateID;?>&vc_url=<?php echo $result['url'];?>' target='_blank'>
-<img src='<?php echo $result['img'][0];?>'>
-</a>
-<p></p>
-<form action="insert.php" method="post" class="navbar-form pull-right" name="submitObject">
-<input type="hidden" name="auctionID" value="<?php echo $auctionID;?>"></input>
-<input type="hidden" name="title" value="<?php echo $result['title'];?>"></input>
-<input type="hidden" name="img" value="<?php echo $result['img'][0];?>"></input>
-<input type="hidden" name="url" value="<?php echo $result['url'];?>"></input>
-<textarea class="span12" name="message" rows="20" placeholder="ストーリーを綴って下さい"></textarea>
-<button type="submit" class="btn">アップロード</button>
-</form>
-</div>
-</div>
-
-<p></p>
-      <!-- FOOTER -->
-      <footer>
-        <p class="pull-right"><a href="#">Back to top</a></p>
-        <p>&copy; 2013 Company, Inc. &middot; <a href="#">Privacy</a> &middot; <a href="#">Terms</a></p>
+	  </div>
+	 </div>
+	<div class="container">
+		<div class="row">
+			<div class="span6">
+<?php
+if($mode=="edit"&&!$result['img'][0]){
+	echo "※このオークションは終了しています";
+}
+?>
+				<h2><?php echo $result['title'][0];?></h2>
+				<a href='http://atq.ck.valuecommerce.com/servlet/atq/referral?sid=2219441&pid=877775177&vcptn=<?php echo $affiliateID;?>&vc_url=<?php echo $result['url'];?>' target='_blank'>
+			</div>
+			<div class="span6">
+				<img src='<?php echo $result['img'][0];?>'>
+				</a>
+			</div>
+			<form action="confirm.php" method="post" onsubmit="return convert(this)" class="span12" name="submitObject">
+				<input type="hidden" name="auctionID" value="<?php echo $auctionID;?>"></input>
+				<input type="hidden" name="title" value="<?php echo $result['title'][0];?>"></input>
+				<input type="hidden" name="img" value="<?php echo $result['img'][0];?>"></input>
+				<input type="hidden" name="url" value="<?php echo $result['url'];?>"></input>
+				<input type="hidden" name="editornew" value="<?php echo $mode;?>"></input>
+				<div class="row">
+				<div class="span12">&nbsp;
+				<?php if($mode=="new"){;?>
+				<textarea class="span12" name="message" rows="20" placeholder="ストーリーを綴って下さい"></textarea>
+				<?php }elseif($mode=="edit"){;?>
+				<textarea class="span12" name="message" rows="20"><?php echo $message;?></textarea>	
+				</div>
+				</div>
+				<?php };?>
+				<button type="submit" class="btn" name="mode" value="confirm">確認画面へ</button>
+				<?php if($mode=="edit"){;?>
+				<button type="submit" class="btn" name="mode" value="remove">投稿を削除する</button>
+				<?php };?>
+			</form>
+	
+	      <!-- FOOTER -->
+      <footer class="pull-right">
+        <p>&copy; 2013 buono</p> 
       </footer>
-
-    </div><!-- /.container -->
+	  </div>
+	
+	</div><!-- /.container -->
 
 
 
@@ -402,6 +164,33 @@ $result['url']=urlencode($pre_result['url'][0]);
       }(window.jQuery)
     </script>
     <script src="js/holder/holder.js"></script>
+	<script src="//ajax.googleapis.com/ajax/libs/jquery/1.10.1/jquery.min.js"></script>
+	<script type="text/javascript" src="js/storyauc.js"></script>
+<script type="text/javascript">
+
+/*
+	function convert(frm){
+		var title = frm.elements["title"].value;
+		var img = frm.elements["img"].value;
+		var url = frm.elements["url"].value;
+		var auctionID = frm.elements["auctionID"].value;
+		var msg = frm.elements["message"].value;
+		convertedMsg = msg.replace("\n","<br/>");
+		return true;
+	};
+*/
+</script>
+<script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+  ga('create', 'UA-42120283-1', 'storyauc.com');
+  ga('send', 'pageview');
+
+</script>
+
   </body>
 </html>
 
