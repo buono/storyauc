@@ -1,354 +1,92 @@
-
 <!DOCTYPE html>
-<html lang="en">
+<html lang="ja">
   <head>
     <meta charset="utf-8">
-    <title>Carousel Template &middot; Bootstrap</title>
+	<meta name="google-site-verification" content="pBOsuHKKVEHL1bp85C3JBL1kDYzMbFYoa5hyUDnd3cA" />
+    <title>STORY TO AUCTION: 出品者の想いを綴ったオークション</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="">
-    <meta name="author" content="">
-
+    <meta name="description" content="STORY TO AUCTIONは、オークション出品者の出品までの想いが詠めるWebサービスです。どんな想いで購入したのか、どれだけ大切に扱われていたのか、そしてどうして手放すことになってしまったのか…。どうせ買うなら、想いを共感できた人から買いませんか？">
+    <meta name="author" content="buono">
     <!-- Le styles -->
     <link href="css/bootstrap.css" rel="stylesheet">
     <link href="css/bootstrap-responsive.css" rel="stylesheet">
     <link href="css/storyauc.css" rel="stylesheet">
+	<link href="css/font-awesome.css" rel="stylesheet" />
 	<link href='http://fonts.googleapis.com/css?family=Lato:100' rel='stylesheet' type='text/css'>
-    <style>
-
-    /* GLOBAL STYLES
-    -------------------------------------------------- */
-    /* Padding below the footer and lighter body text */
-
-    body {
-      padding-bottom: 40px;
-      color: #5a5a5a;
-    }
-
-
-
-    /* CUSTOMIZE THE NAVBAR
-    -------------------------------------------------- */
-
-    /* Special class on .container surrounding .navbar, used for positioning it into place. */
-    .navbar-wrapper {
-      position: absolute;
-      top: 0;
-      left: 0;
-      right: 0;
-      z-index: 10;
-      margin-top: 20px;
-      margin-bottom: -90px; /* Negative margin to pull up carousel. 90px is roughly margins and height of navbar. */
-    }
-    .navbar-wrapper .navbar {
-
-    }
-
-    /* Remove border and change up box shadow for more contrast */
-    .navbar .navbar-inner {
-      border: 0;
-      -webkit-box-shadow: 0 2px 10px rgba(0,0,0,.25);
-         -moz-box-shadow: 0 2px 10px rgba(0,0,0,.25);
-              box-shadow: 0 2px 10px rgba(0,0,0,.25);
-    }
-
-    /* Downsize the brand/project name a bit */
-    .navbar .brand {
-      padding: 14px 20px 16px; /* Increase vertical padding to match navbar links */
-      font-size: 16px;
-      font-weight: bold;
-      text-shadow: 0 -1px 0 rgba(0,0,0,.5);
-    }
-
-    /* Navbar links: increase padding for taller navbar */
-    .navbar .nav > li > a {
-      padding: 15px 20px;
-    }
-
-    /* Offset the responsive button for proper vertical alignment */
-    .navbar .btn-navbar {
-      margin-top: 10px;
-    }
-
-
-
-    /* CUSTOMIZE THE CAROUSEL
-    -------------------------------------------------- */
-
-    /* Carousel base class */
-    .carousel {
-      margin-bottom: 60px;
-    }
-
-    .carousel .container {
-      position: relative;
-      z-index: 9;
-    }
-
-    .carousel-control {
-      height: 80px;
-      margin-top: 0;
-      font-size: 120px;
-      text-shadow: 0 1px 1px rgba(0,0,0,.4);
-      background-color: transparent;
-      border: 0;
-      z-index: 10;
-    }
-
-    .carousel .item {
-      height: 500px;
-    }
-    .carousel img {
-      position: absolute;
-      top: 0;
-      left: 0;
-      min-width: 100%;
-      height: 500px;
-    }
-
-    .carousel-caption {
-      background-color: transparent;
-      position: static;
-      max-width: 550px;
-      padding: 0 20px;
-      margin-top: 200px;
-    }
-    .carousel-caption h1,
-    .carousel-caption .lead {
-      margin: 0;
-      line-height: 1.25;
-      color: #fff;
-      text-shadow: 0 1px 1px rgba(0,0,0,.4);
-    }
-    .carousel-caption .btn {
-      margin-top: 10px;
-    }
-
-
-
-    /* MARKETING CONTENT
-    -------------------------------------------------- */
-
-    /* Center align the text within the three columns below the carousel */
-    .marketing .span4 {
-      text-align: center;
-    }
-    .marketing h2 {
-      font-weight: normal;
-    }
-    .marketing .span4 p {
-      margin-left: 10px;
-      margin-right: 10px;
-    }
-
-
-    /* Featurettes
-    ------------------------- */
-
-    .featurette-divider {
-      margin: 80px 0; /* Space out the Bootstrap <hr> more */
-    }
-    .featurette {
-      padding-top: 120px; /* Vertically center images part 1: add padding above and below text. */
-      overflow: hidden; /* Vertically center images part 2: clear their floats. */
-    }
-    .featurette-image {
-      margin-top: -120px; /* Vertically center images part 3: negative margin up the image the same amount of the padding to center it. */
-    }
-
-    /* Give some space on the sides of the floated elements so text doesn't run right into it. */
-    .featurette-image.pull-left {
-      margin-right: 40px;
-    }
-    .featurette-image.pull-right {
-      margin-left: 40px;
-    }
-
-    /* Thin out the marketing headings */
-    .featurette-heading {
-      font-size: 50px;
-      font-weight: 300;
-      line-height: 1;
-      letter-spacing: -1px;
-    }
-
-
-
-    /* RESPONSIVE CSS
-    -------------------------------------------------- */
-
-    @media (max-width: 979px) {
-
-      .container.navbar-wrapper {
-        margin-bottom: 0;
-        width: auto;
-      }
-      .navbar-inner {
-        border-radius: 0;
-        margin: -20px 0;
-      }
-
-      .carousel .item {
-        height: 500px;
-      }
-      .carousel img {
-        width: auto;
-        height: 500px;
-      }
-
-      .featurette {
-        height: auto;
-        padding: 0;
-      }
-      .featurette-image.pull-left,
-      .featurette-image.pull-right {
-        display: block;
-        float: none;
-        max-width: 40%;
-        margin: 0 auto 20px;
-      }
-    }
-
-
-    @media (max-width: 767px) {
-
-      .navbar-inner {
-        margin: -20px;
-      }
-
-      .carousel {
-        margin-left: -20px;
-        margin-right: -20px;
-      }
-      .carousel .container {
-
-      }
-      .carousel .item {
-        height: 300px;
-      }
-      .carousel img {
-        height: 300px;
-      }
-      .carousel-caption {
-        width: 65%;
-        padding: 0 70px;
-        margin-top: 100px;
-      }
-      .carousel-caption h1 {
-        font-size: 30px;
-      }
-      .carousel-caption .lead,
-      .carousel-caption .btn {
-        font-size: 18px;
-      }
-
-      .marketing .span4 + .span4 {
-        margin-top: 40px;
-      }
-
-      .featurette-heading {
-        font-size: 30px;
-      }
-      .featurette .lead {
-        font-size: 18px;
-        line-height: 1.5;
-      }
-
-    }
-    </style>
-
+	<link href='http://fonts.googleapis.com/css?family=Poiret+One' rel='stylesheet' type='text/css'>
     <!-- HTML5 shim, for IE6-8 support of HTML5 elements -->
     <!--[if lt IE 9]>
       <script src="js/html5shiv.js"></script>
+	  <script src="js/css3-mediaqueries.js"></script>
     <![endif]-->
-
+	<!--[if lte IE 7.0]>
+	<script src="js/imgsizer.js"></script>
+	<![endif]-->
     <!-- Fav and touch icons -->
     <link rel="apple-touch-icon-precomposed" sizes="144x144" href="ico/apple-touch-icon-144-precomposed.png">
     <link rel="apple-touch-icon-precomposed" sizes="114x114" href="ico/apple-touch-icon-114-precomposed.png">
-      <link rel="apple-touch-icon-precomposed" sizes="72x72" href="ico/apple-touch-icon-72-precomposed.png">
-                    <link rel="apple-touch-icon-precomposed" href="ico/apple-touch-icon-57-precomposed.png">
-                                   <link rel="shortcut icon" href="ico/favicon.png">
+    <link rel="apple-touch-icon-precomposed" sizes="72x72" href="ico/apple-touch-icon-72-precomposed.png">
+    <link rel="apple-touch-icon-precomposed" href="ico/apple-touch-icon-57-precomposed.png">
+    <link rel="shortcut icon" href="favicon.ico">
   </head>
-
   <body>
-
-
-
-    <!-- NAVBAR
-    ================================================== -->
-    <div class="navbar-wrapper">
-      <!-- Wrap the .navbar in .container to center it within the absolutely positioned parent. -->
-      <div class="container">
-
-        <div class="navbar navbar-inverse">
+<!--facebook plugin-->
+<div id="fb-root"></div>
+<script>(function(d, s, id) {
+  var js, fjs = d.getElementsByTagName(s)[0];
+  if (d.getElementById(id)) return;
+  js = d.createElement(s); js.id = id;
+  js.src = "//connect.facebook.net/ja_JP/all.js#xfbml=1&appId=226014524245632";
+  fjs.parentNode.insertBefore(js, fjs);
+}(document, 'script', 'facebook-jssdk'));</script>
+<!--
+<div id="fb-root"></div>
+<script>(function(d, s, id) {
+  var js, fjs = d.getElementsByTagName(s)[0];
+  if (d.getElementById(id)) return;
+  js = d.createElement(s); js.id = id;
+  js.src = "//connect.facebook.net/ja_JP/all.js#xfbml=1";
+  fjs.parentNode.insertBefore(js, fjs);
+}(document, 'script', 'facebook-jssdk'));</script>
+-->
+        <div class="navbar navbar-inverse navbar-static-top">
           <div class="navbar-inner">
-            <!-- Responsive Navbar Part 1: Button for triggering responsive navbar (not covered in tutorial). Include responsive CSS to utilize. -->
-            <button type="button" class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse">
-              <span class="icon-bar"></span>
-              <span class="icon-bar"></span>
-              <span class="icon-bar"></span>
-            </button>
-            <a class="brand" href="index.php">Story to Auction</a>
-            <!-- Responsive Navbar Part 2: Place all navbar contents you want collapsed withing .navbar-collapse.collapse. -->
-            <div class="nav-collapse collapse">
-              <ul class="nav">
-                <li class="active"><a href="index.php">Home</a></li>
-                <li><a href="#about">About</a></li>
-                <li><a href="#contact">Contact</a></li>
-                <!-- Read about Bootstrap dropdowns at http://twitter.github.com/bootstrap/javascript.html#dropdowns -->
-                <li class="dropdown">
-                  <a href="#" class="dropdown-toggle" data-toggle="dropdown">Dropdown <b class="caret"></b></a>
-                  <ul class="dropdown-menu">
-                    <li><a href="#">Action</a></li>
-                    <li><a href="#">Another action</a></li>
-                    <li><a href="#">Something else here</a></li>
-                    <li class="divider"></li>
-                    <li class="nav-header">Nav header</li>
-                    <li><a href="#">Separated link</a></li>
-                    <li><a href="#">One more separated link</a></li>
-                  </ul>
-                </li>
-              </ul>
-            </div><!--/.nav-collapse -->
-          </div><!-- /.navbar-inner -->
-        </div><!-- /.navbar -->
-
-      </div> <!-- /.container -->
-    </div><!-- /.navbar-wrapper -->
-
-
+		  <div class="container">
+            <a class="brand active" href="index.php">STORY TO AUCTION</a>
+			<a class="pull-right tweet-icon" href="https://twitter.com/storytoauction" data-show-count="false" data-lang="ja" data-show-screen-name="false" data-dnt="true"><img class="width:30px;" src="img/Twitter_logo_white.png"></a>
+		  </div>
+		  </div>
+		 </div>
 
     <!-- Carousel
     ================================================== -->
+<div class="row">
     <div id="myCarousel" class="carousel slide">
       <div class="carousel-inner">
         <div class="item active">
-          <img src="img/top.png" alt="">
+          <img src="img/top3_after.jpg" alt="">
           <div class="container">
             <div class="carousel-caption">
-			  <h1 class="top">STORY</h1>
-			  <h2 class="top">TO AUCTION</h2>
-              <h1>その中古品には、色んな想いが詰まってる</h1>
-             <!-- <p class="lead">その商品を買った時、使っている時、手放す時…。中古品には、その想い全てが詰まっています。大切に使っていた物だから、せっかくだから次も大切に使ってくれる人に売りたくありませんか？これからは、物と一緒にストーリーを売ろう</p>-->
+              <h1>その出品には、色んな想いが詰まってる。</h1>
+              <p class="lead">買った時、使っている時、出品する時。<br/>オークションの出品物には、その時々の想い全てが<br/>詰まっています。</p>
             </div>
           </div>
         </div>
         <div class="item">
-          <img src="img/examples/slide-02.jpg" alt="">
+          <img src="img/top2_after.jpg" alt="">
           <div class="container">
             <div class="carousel-caption">
-              <h1>Another example headline.</h1>
-              <p class="lead">Cras justo odio, dapibus ac facilisis in, egestas eget quam. Donec id elit non mi porta gravida at eget metus. Nullam id dolor id nibh ultricies vehicula ut id elit.</p>
-              <a class="btn btn-large btn-primary" href="#">Learn more</a>
+              <h1>前使っていたのは、どんな人なんだろう。</h1>
+              <p class="lead">中古品を買って、そんなことを考えた事はありませんか？<br/>STORY TO AUCTIONなら、買う前に知る事ができます。</p>
             </div>
           </div>
         </div>
         <div class="item">
-          <img src="img/examples/slide-03.jpg" alt="">
+          <img src="img/top1_after.jpg" alt="" style="width:100%">
           <div class="container">
             <div class="carousel-caption">
-              <h1>One more for good measure.</h1>
-              <p class="lead">Cras justo odio, dapibus ac facilisis in, egestas eget quam. Donec id elit non mi porta gravida at eget metus. Nullam id dolor id nibh ultricies vehicula ut id elit.</p>
-              <a class="btn btn-large btn-primary" href="#">Browse gallery</a>
+              <h1>せっかくだから、次も大事に使ってほしい。</h1>
+              <p class="lead">大事に使っていた物は、大事にしてくれる人に売りたい。<br/>熱い想いを語る場がここにあります。</p>
             </div>
           </div>
         </div>
@@ -356,6 +94,7 @@
       <a class="left carousel-control" href="#myCarousel" data-slide="prev">&lsaquo;</a>
       <a class="right carousel-control" href="#myCarousel" data-slide="next">&rsaquo;</a>
     </div><!-- /.carousel -->
+</div>
 
 
 
@@ -364,43 +103,124 @@
     <!-- Wrap the rest of the page in another container to center all the content. -->
 
     <div class="container marketing">
-
       <!-- Three columns of text below the carousel -->
       <div class="row">
-        <div class="span6">
-          <img class="img-circle" data-src="holder.js/140x140">
-          <h2>想いを綴る</h2>
-          <p>あなたのその商品に対する熱い想いを綴って下さい。なぜそれを買う事になったのか、どんな気持ちで使っていたのか、どうして手放すことになってしまったのか。きっとその気持ちは、見ている人に届くはず</p>
-<form action="submit.php" method="get" class="navbar-form pull-right" >
-<input class="span2" type="text" name="auctionID" placeholder="auctionID">
-<button type="submit" class="btn">綴る&raquo;</button>
-</form>
-        </div><!-- /.span4 -->
-        <div class="span6">
-          <img class="img-circle" data-src="holder.js/140x140">
-          <h2>想いを詠む</h2>
-          <p>オークションは安いけど、どんな人が使っていたか分からない。そんな不安を持っている方、是非出品者の想いを詠んでみて下さい。大事に使われている事が伝わってくるかもしれません。</p>
-           <a class="btn btn-large btn-primary" href="list.php">詠む</a>
+        <div class="span6 write-explain">
+		  <div class="row">
+		  <div class="span6">
+          	<h2><i class="fa fa-leaf"></i> 想いを綴る</h2>
+		  </div>
+		  </div>
+		  <div class="row">
+		  <div class="span6">
+          	<p>あなたのその商品に対する熱い想いを綴って下さい。</p>
+		  	<p>なぜそれを買う事になったのか、どんな気持ちで使っていたのか、どうして手放すことになってしまったのか。</p>
+		  	<p>きっとその気持ちは、見ている人に届くはず。</p>
+		  </div>
+		  </div>
+		  
+		  <div class="row">
+		  <div class="span3 offset3">
+			<form action="submit.php" method="get" class="pull-right input-append" >
+			<a rel="tooltip-error" data-placement="top" data-original-title="オークションIDを正しく入力して下さい" data-trigger="manual"><input class="input-large validate auctionid" type="text" id="appendedInputButton" name="auctionID" placeholder="オークションIDを入力して下さい"></a>
+			<button type="submit" class="btn btn-primary">綴る <i class="fa fa-caret-right"></i></button>
+			</form>
+		  </div>
+		  </div>
+
+		  <div class="row">
+		  <div class="span6">
+		  &nbsp;
+		  </div>
+		  </div>
+			
+		  <div class="row">
+				<div class="span2 offset4">
+		  			<a href="#" class="pull-right" rel="tooltip" data-placement="top" data-original-title="オークションIDとは、出品物に対して固有に割り当てられた番号の事です。ヤフオクであれば、出品ページに行き、「商品の情報」→「詳細情報」→「オークションID」で確認する事ができます。">オークションIDとは</a>
+				</div>
+			</div>
+		  <div class="row">
+				<div class="span2 offset4">
+		  			<a href="#" class="pull-right" rel="tooltip" data-placement="top" data-original-title="既に投稿をした事のある出品物であれば、オークションIDを入力すれば過去の投稿を修正／消去する事ができます。">修正、消去の仕方</a>
+				</div>
+		  </div>
+		</div>
+		
+		<div class="span6 read-explain">
+		<div class="row">	
+          <div class="span6">
+          <h2><i class="fa fa-book "></i> 想いを詠む</h2>
+		  </div>
+		</div>
+		<div class="row">
+		  <div class="span6">
+          <p>オークションは安いけど、どんな人が使っていたのかもどんな風に使われていたのか分からない。</p>
+		  <p>そんな不安を持っている方、是非このサイトで出品者の熱い想いを詠んでみて下さい。</p>
+		  <p>出品者の人柄まで、伝わって来るかもしれません。</p>
+		  </div>
+		</div>
+		<div class="row">
+		  <div class="span5 offset1">
+           <a class="btn btn-primary pull-right" href="list.php">詠む <i class="fa fa-caret-right"></i></a>
+		   </div>
         </div><!-- /.span4 -->
       </div><!-- /.row -->
+	</div>
+</div><!-- /.container -->
 
+<div class="container" id="media-info">
+	<h3 id="media-title" class="text-center">-メディアに掲載して頂きました-</h3>
+	<div class="row">
+		<div class="span3 offset3">
+			<a href="http://techable.jp/archives/9227"><img src="http://techable.jp/wp-content/themes/imbalance2/images/techable/logo.png" /></a>
+		</div>
+		<div class="span3">
+			<a href="http://www.fashionsnap.com/the-posts/2013-12-23/story-to-auction/"><img src="http://www.fashionsnap.com/img/logo-360.png" /></a>
+		</div>
+	</div>
+</div>
 
+<div class="container" id="top-message">
+	<h1 class="text-center">オークションの世界を覗いてみよう</h1>
+	<h2 class="text-center"><i class="fa fa-chevron-down"></i></h2>
+</div>
+<div id="content-img-3">
+<div id="content-img-2">
+<div id="content-img-1">
+	<h1 id="img-message" class="container">こだわりの一品を。</h1>
+</div>
+</div>
+</div>
+<div class="container text-right" id="footer">
+    <p>&copy; 2013 <a href="http://buono.in/">Buono</a></p> 
+</div>
 
+<div class="container" id="footer-message">
+<div class="row">
+<div class="span1">
+			<a href="https://twitter.com/share" style="margin-top:10px" class="twitter-share-button" data-url="http://storyauc.com" data-text="STORY TO AUCTION">Tweet</a>
+<script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0],p=/^http:/.test(d.location)?'http':'https';if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src=p+'://platform.twitter.com/widgets.js';fjs.parentNode.insertBefore(js,fjs);}}(document, 'script', 'twitter-wjs');</script>	
+</div>
 
-      <!-- FOOTER -->
-      <footer>
-        <p class="pull-right"><a href="#">Back to top</a></p>
-        <p>&copy; 2013 Company, Inc. &middot; <a href="#">Privacy</a> &middot; <a href="#">Terms</a></p>
-      </footer>
-
-    </div><!-- /.container -->
+<!--
+<div class="span1">
+	<div class="fb-like" data-href="http://storyauc.com" data-send="false" data-layout="button_count" data-width="100" data-show-faces="false"></div>
+</div>
+-->
+<div class="fb-like" data-href="http://storyauc.com/" data-width="450" data-layout="standard" data-action="like" data-show-faces="true" data-share="true"></div>
+<div class="span2 offset8">
+</div>
+</div>
+</div>
 
 
 
     <!-- Le javascript
     ================================================== -->
     <!-- Placed at the end of the document so the pages load faster -->
+	<script src="http://code.jquery.com/jquery.js"></script>
     <script src="js/jquery.js"></script>
+    <script src="js/bootstrap.js"></script>
     <script src="js/bootstrap-transition.js"></script>
     <script src="js/bootstrap-alert.js"></script>
     <script src="js/bootstrap-modal.js"></script>
@@ -413,7 +233,12 @@
     <script src="js/bootstrap-collapse.js"></script>
     <script src="js/bootstrap-carousel.js"></script>
     <script src="js/bootstrap-typeahead.js"></script>
+    <script src="js/holder/holder.js"></script>
+	<script src="js/storyauc.js"></script>
     <script>
+jQuery(function($){
+	$("a[rel=tooltip]").tooltip();
+});
       !function ($) {
         $(function(){
           // carousel demo
@@ -421,7 +246,16 @@
         })
       }(window.jQuery)
     </script>
-    <script src="js/holder/holder.js"></script>
+<script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+  ga('create', 'UA-42120283-1', 'storyauc.com');
+  ga('send', 'pageview');
+
+</script>
   </body>
 </html>
 
